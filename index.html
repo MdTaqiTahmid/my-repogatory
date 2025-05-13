@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Md Taqi Tahmid Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <meta name="description" content="Personal portfolio website showcasing projects, blog posts, and contact information" />
+    <meta name="author" content="Md Taqi Tahmid" />
+
+    <meta property="og:title" content="Md Taqi Tahmid - Personal Portfolio" />
+    <meta property="og:description" content="Personal portfolio website showcasing projects, blog posts, and contact information" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@taqithamid" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <script>
+      // Initialize EmailJS with your public key
+      (function() {
+          emailjs.init('vghwAWZVJL3zHtSxz'); // Replace with your EmailJS public key
+      })();
+  </script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: '#9b87f5',
+              secondary: '#7E69AB',
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.3s ease-out',
+              'fade-out': 'fadeOut 0.3s ease-out',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0', transform: 'translateY(10px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' }
+              },
+              fadeOut: {
+                '0%': { opacity: '1', transform: 'translateY(0)' },
+                '100%': { opacity: '0', transform: 'translateY(10px)' }
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      .page {
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+      .page.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      #navbar {
+        transition: background-color 0.3s ease;
+      }
+      .dark {
+        color-scheme: dark;
+      }
+    </style>
+  </head>
+
+  <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
+
+<!-- Opening Interface with Typing Effect -->
+<div id="opening-interface" class="fixed inset-0 z-[9999] bg-gradient-to-br from-gray-800 to-gray-600 flex items-center justify-center">
+  <div class="text-center px-4">
+      <div class="mb-8 relative">
+          <div class="w-32 h-32 md:w-40 md:h-40 bg-white/10 backdrop-blur-lg rounded-full mx-auto flex items-center justify-center overflow-hidden border-4 border-white/30">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-[100px]">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+            </svg>
+            
+          </div>
+          <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 hidden">
+              <div class="animate-bounce bg-white/20 p-2 rounded-full">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
+              </div>
+          </div>
+      </div>
+      
+      <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+          <span id="company-name" class="inline-block"></span>
+          <span class="typing-cursor animate-pulse">|</span>
+      </h1>
+      
+      <p id="tagline" class="text-blue-100 text-xl opacity-0 transition-opacity duration-1000">Make Your Dream Website</p>
+      
+      <div class="mt-12 w-64 md:w-80 h-2 bg-white/20 rounded-full mx-auto overflow-hidden">
+          <div id="progress-bar" class="h-full bg-white transform transition-all duration-1000 w-0"></div>
+      </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      // Elements
+      const openingInterface = document.getElementById('opening-interface');
+      const companyName = document.getElementById('company-name');
+      const tagline = document.getElementById('tagline');
+      const progressBar = document.getElementById('progress-bar');
+      
+      // Text to type
+      const text = "Wellcome To My Portfolio";
+      let charIndex = 0;
+      let typingSpeed = 150;
+      
+      // Typing effect
+      function typeText() {
+          if (charIndex < text.length) {
+              companyName.textContent += text.charAt(charIndex);
+              charIndex++;
+              setTimeout(typeText, typingSpeed);
+          } else {
+              // Show tagline after typing completes
+              setTimeout(() => {
+                  tagline.style.opacity = '1';
+              }, 500);
+          }
+      }
+      
+      // Start typing after a short delay
+      setTimeout(typeText, 1000);
+      
+      // Progress bar animation
+      let progress = 0;
+      const interval = setInterval(() => {
+          progress += 1;
+          progressBar.style.width = `${progress}%`;
+          
+          if (progress >= 100) {
+              clearInterval(interval);
+              
+              // Fade out the opening interface
+              setTimeout(() => {
+                  openingInterface.style.opacity = '0';
+                  openingInterface.style.transition = 'opacity 0.8s ease-in-out';
+                  
+                  // Hide completely after fade out
+                  setTimeout(() => {
+                      openingInterface.style.display = 'none';
+                  }, 800);
+              }, 1000);
+          }
+      }, 50);
+      
+      // Add some particle effects
+      const particleCount = 20;
+      for (let i = 0; i < particleCount; i++) {
+          createParticle();
+      }
+      
+      function createParticle() {
+          const particle = document.createElement('div');
+          particle.className = 'absolute w-2 h-2 bg-white/30 rounded-full';
+          
+          // Random position
+          const posX = Math.random() * 100;
+          const posY = Math.random() * 100;
+          particle.style.left = `${posX}%`;
+          particle.style.top = `${posY}%`;
+          
+          // Random animation
+          const duration = 3 + Math.random() * 5;
+          particle.style.animation = `float ${duration}s ease-in-out infinite`;
+          
+          // Add keyframes for floating animation
+          const style = document.createElement('style');
+          style.textContent = `
+              @keyframes float {
+                  0% { transform: translate(0, 0); opacity: 0; }
+                  50% { opacity: 0.8; }
+                  100% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px); opacity: 0; }
+              }
+          `;
+          document.head.appendChild(style);
+          
+          openingInterface.appendChild(particle);
+      }
+  });
+</script>
+
+<script>
+  document.getElementById('contactForm').addEventListener('submit', function(event) {
+      // ... existing form submission code ...
+  });
+</script>
+
+
+
+    <!-- Navbar -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+      <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="#home" class="text-xl font-semibold tracking-tight text-white">Portfolio</a>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center gap-6">
+          <a href="#home" class="nav-link text-sm font-medium transition-colors hover:text-primary active-nav-link" data-target="home">Home</a>
+          <a href="#projects" class="nav-link text-sm font-medium text-gray-500 dark:text-gray-400 transition-colors hover:text-primary" data-target="projects">Projects</a>
+          <a href="#blog" class="nav-link text-sm font-medium text-gray-500 dark:text-gray-400 transition-colors hover:text-primary hidden" data-target="blog">Blog</a>
+          <a href="#contact" class="nav-link text-sm font-medium text-gray-500 dark:text-gray-400 transition-colors hover:text-primary" data-target="contact">Contact</a>
+          <button id="themeToggle" class="rounded-full transition-all duration-300 p-2 text-white">
+            <!-- Sun icon for dark mode -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <!-- Moon icon for light mode -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile Navigation Toggle -->
+        <div class="flex items-center gap-4 md:hidden">
+          <button id="themeToggleMobile" class="rounded-full transition-all duration-300 p-2">
+            <!-- Sun icon for dark mode -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <!-- Moon icon for light mode -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </button>
+          <button id="mobileMenuToggle" class="text-gray-900 dark:text-white">
+            <!-- Menu icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" id="menuIcon">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <!-- Close icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" id="closeIcon">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="md:hidden bg-white dark:bg-gray-900 border-b hidden">
+        <div class="container mx-auto px-6 py-4 flex flex-col space-y-4 ">
+          <a href="#home" class="mobile-nav-link text-base font-medium py-2 transition-colors hover:text-primary" data-target="home">Home</a>
+          <a href="#projects" class="mobile-nav-link text-base font-medium text-gray-500 dark:text-gray-400 py-2 transition-colors hover:text-primary" data-target="projects">Projects</a>
+          
+          <a href="#contact" class="mobile-nav-link text-base font-medium text-gray-500 dark:text-gray-400 py-2 transition-colors hover:text-primary" data-target="contact">Contact</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 min-h-screen">
+      <!-- Home Page -->
+      <section id="home" class="page active min-h-screen -pt-30 pb-16 relative overflow-hidden">
+        <!-- 3D Animation Background -->
+        <div id="canvas-container" class="absolute inset-0 -z-10"></div>
+        
+        <div class="container mx-auto px-6 py-32 relative z-10">
+          <section class="py-16 md:py-24">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+              <div class="rounded-2xl overflow-hidden aspect-square bg-gray-200 dark:bg-gray-800 flex items-center justify-center shadow-lg  md:hidden">
+                <span class="text-gray-500 dark:text-gray-400"><img src="WhatsApp Image 2025-04-10 at 09.49.05_b0270012.jpg" alt="222"></span>
+              </div>
+              <div class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm p-8 rounded-xl shadow-lg">
+                <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+                  Hi, I'm <span class="text-primary">Md Taqi Tahmid</span>
+                </h1>
+                <p class="text-xl mb-8 text-gray-500 dark:text-gray-400">
+                  I'm a frontend developer specializing in creating beautiful, functional, and user-centered digital experiences.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                  <a href="#contact" class="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-4 py-2 rounded hover:bg-opacity-90 dark:hover:bg-opacity-90 transition-colors inline-flex items-center">
+                    Let's Talk
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </a>
+                  <a href="/resume.pdf" download class="border border-gray-300 dark:border-gray-700 px-4 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors inline-flex items-center">
+                    Resume
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <div class="rounded-2xl overflow-hidden aspect-square bg-gray-200 dark:bg-gray-800 flex items-center justify-center shadow-lg hidden md:block">
+                <span class="text-gray-500 dark:text-gray-400"><img src="WhatsApp Image 2025-04-10 at 09.49.05_b0270012.jpg" alt="222"></span>
+              </div>
+            </div>
+          </section>
+          
+          <!-- Skills Section -->
+          <section class="py-16 md:py-24">
+            <h2 class="text-2xl md:text-3xl font-bold mb-8">My Skills</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg text-center">
+                <span class="font-medium">HTML</span>
+              </div>
+              <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg text-center">
+                <span class="font-medium">CSS</span>
+              </div>
+              <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg text-center">
+                <span class="font-medium">JavaScript</span>
+              </div>
+              <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg text-center">
+                <span class="font-medium">Tailwind CSS</span>
+              </div>
+              <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg text-center">
+                <span class="font-medium">UI/UX Design</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Featured Projects Preview -->
+          <section class="py-16 md:py-24">
+            <div class="flex items-center justify-between mb-8">
+              <h2 class="text-2xl md:text-3xl font-bold">Featured Projects</h2>
+              <a href="#projects" class="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors inline-flex items-center">
+                View All
+                <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div class="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden group hover:shadow-md transition-shadow">
+                <div class="bg-gray-200 dark:bg-gray-800 aspect-video flex items-center justify-center">
+                  <span class="text-gray-500 dark:text-gray-400"><img src="Capture.JPG" alt=""></span>
+                </div>
+                <div class="p-6">
+                  <h3 class="text-xl font-semibold mb-2">Project One</h3>
+                  <p class="text-gray-500 dark:text-gray-400 mb-4">Modern Computer Website With Awesome Design.</p>
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">HTML</span>
+                    <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">TAilwindCSS</span>
+                    <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">JavaScript</span>
+                    <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">Nodejs</span>
+                  </div>
+                  <a href="#projects" class="text-gray-500 dark:text-gray-400 group-hover:text-primary transition-colors inline-flex items-center">
+                    View Project
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <div class="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden group hover:shadow-md transition-shadow">
+                <div class="bg-gray-200 dark:bg-gray-800 aspect-video flex items-center justify-center">
+                  <span class="text-gray-500 dark:text-gray-400"><img src="Capture4444.JPG" alt=""></span>
+                </div>
+                <div class="p-6">
+                  <h3 class="text-xl font-semibold mb-2">Project Two</h3>
+                  <p class="text-gray-500 dark:text-gray-400 mb-4">Morden Resturent Website With Login & Sing Up Page.</p>
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">HTML</span>
+                    <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">JavaScript</span>
+                    <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">Tailwind</span>
+                  </div>
+                  <a href="#projects" class="text-gray-500 dark:text-gray-400 group-hover:text-primary transition-colors inline-flex items-center">
+                    View Project
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- Projects Page -->
+      <section id="projects" class="page min-h-screen pt-32 pb-16 hidden">
+        <div class="container mx-auto px-6">
+          <div class="mb-12">
+            <h1 class="text-4xl font-bold mb-4">Projects</h1>
+            <p class="text-xl text-gray-500 dark:text-gray-400">A collection of my recent work and personal projects.</p>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Project 1 -->
+            <div class="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden flex flex-col">
+              <div class="bg-gray-200 dark:bg-gray-800 aspect-video flex items-center justify-center">
+                <span class="text-gray-500 dark:text-gray-400"><img src="Capture.JPG" alt=""></span>
+              </div>
+              <div class="p-6 flex-1 flex flex-col">
+                <h2 class="text-2xl font-semibold mb-2">Project One</h2>
+                <p class="text-gray-500 dark:text-gray-400 mb-6 flex-1">Modern Computer Website With Awesome Design.</p>
+                
+                <div class="flex flex-wrap gap-2 mb-6">
+                  <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">HTML</span>
+                  <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">TailwindCSS</span>
+                  <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">JavaScript</span>
+                  <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">Nodejs</span>
+                </div>
+                
+                <div class="flex flex-wrap gap-3">
+                  <a href="https://example.com" target="_blank" rel="noopener noreferrer" class="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-3 py-1 text-sm rounded hover:bg-opacity-90 dark:hover:bg-opacity-90 transition-colors inline-flex items-center">
+                    Live Demo
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                  <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="border border-gray-300 dark:border-gray-700 px-3 py-1 text-sm rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors inline-flex items-center">
+                    GitHub
+                    <svg xmlns="https://github.com/MdTaqiTahmid/rrr" class="ml-1 h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden flex flex-col">
+              <div class="bg-gray-200 dark:bg-gray-800 aspect-video flex items-center justify-center">
+                <span class="text-gray-500 dark:text-gray-400"><img src="Capture4444.JPG" alt=""></span>
+              </div>
+              <div class="p-6 flex-1 flex flex-col">
+                <h2 class="text-2xl font-semibold mb-2">Project Two</h2>
+                <p class="text-gray-500 dark:text-gray-400 mb-6 flex-1">Morden Resturent Website With Login & Sing Up Page.</p>
+                
+                <div class="flex flex-wrap gap-2 mb-6">
+                  <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">HTML</span>
+                  <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">TailwindCSS</span>
+                  <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">JavaScript</span>
+                  
+                </div>
+                
+                <div class="flex flex-wrap gap-3">
+                  <a href="https://mdtaqitahmid.github.io/Food-Bazar/" target="_blank" rel="noopener noreferrer" class="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-3 py-1 text-sm rounded hover:bg-opacity-90 dark:hover:bg-opacity-90 transition-colors inline-flex items-center">
+                    Live Demo
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                  <a href="https://github.com/MdTaqiTahmid/Food-Bazar" target="_blank" rel="noopener noreferrer" class="border border-gray-300 dark:border-gray-700 px-3 py-1 text-sm rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors inline-flex items-center">
+                    GitHub
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Add more projects as needed -->
+            <div class="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden flex flex-col">
+              <div class="bg-gray-200 dark:bg-gray-800 aspect-video flex items-center justify-center">
+                <span class="text-gray-500 dark:text-gray-400"><img src="Capture444444.JPG" alt=""></span>
+              </div>
+              <div class="p-6 flex-1 flex flex-col">
+                <h2 class="text-2xl font-semibold mb-2">Project Three</h2>
+                <p class="text-gray-500 dark:text-gray-400 mb-6 flex-1">Awsome Eccomerac Website With Animation.</p>
+                
+                <div class="flex flex-wrap gap-2 mb-6">
+                  <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">HTML</span>
+                  <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">TailwindCSS</span>
+                  <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">JavaScript</span>
+                  
+                </div>
+                
+                <div class="flex flex-wrap gap-3">
+                  <a href="https://mdtaqitahmid.github.io/Morden-Ecommerce-Website/" target="_blank" rel="noopener noreferrer" class="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-3 py-1 text-sm rounded hover:bg-opacity-90 dark:hover:bg-opacity-90 transition-colors inline-flex items-center">
+                    Live Demo
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                  <a href="https://github.com/MdTaqiTahmid/Morden-Ecommerce-Website" target="_blank" rel="noopener noreferrer" class="border border-gray-300 dark:border-gray-700 px-3 py-1 text-sm rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors inline-flex items-center">
+                    GitHub
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <div class="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden flex flex-col">
+              <div class="bg-gray-200 dark:bg-gray-800 aspect-video flex items-center justify-center">
+                <span class="text-gray-500 dark:text-gray-400"><img src="Captureerterer.JPG" alt=""></span>
+              </div>
+              <div class="p-6 flex-1 flex flex-col">
+                <h2 class="text-2xl font-semibold mb-2">Project Four</h2>
+                <p class="text-gray-500 dark:text-gray-400 mb-6 flex-1">Defult Gerden Website.</p>
+                
+                <div class="flex flex-wrap gap-2 mb-6">
+                  <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">HTML</span>
+                  <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">TailwindCSS</span>
+                  <span class="bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-md">JavaScript</span>
+                  
+                </div>
+                
+                <div class="flex flex-wrap gap-3">
+                  <a href="https://mdtaqitahmid.github.io/plant2/" target="_blank" rel="noopener noreferrer" class="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-3 py-1 text-sm rounded hover:bg-opacity-90 dark:hover:bg-opacity-90 transition-colors inline-flex items-center">
+                    Live Demo
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                  <a href="https://github.com/MdTaqiTahmid/plant2" target="_blank" rel="noopener noreferrer" class="border border-gray-300 dark:border-gray-700 px-3 py-1 text-sm rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors inline-flex items-center">
+                    GitHub
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Blog Page -->
+      <section id="blog" class="page min-h-screen pt-32 pb-16 hidden">
+        <div class="container mx-auto px-6">
+          <div class="mb-12">
+            <h1 class="text-4xl font-bold mb-4">Blog</h1>
+            <p class="text-xl text-gray-500 dark:text-gray-400">Thoughts on development, design, and technology.</p>
+          </div>
+          
+          <div class="space-y-10">
+            <!-- Blog Post 1 -->
+            <div class="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden">
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="md:col-span-1 bg-gray-200 dark:bg-gray-800 aspect-video md:aspect-auto flex items-center justify-center">
+                  <span class="text-gray-500 dark:text-gray-400">Blog Image</span>
+                </div>
+                <div class="p-6 md:col-span-2">
+                  <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mr-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <time datetime="2023-04-15">April 15, 2023</time>
+                    <span class="mx-2">•</span>
+                    <span>5 min read</span>
+                  </div>
+                  
+                  <h2 class="text-2xl font-semibold mb-3">
+                    <a href="#" class="hover:underline">Getting Started with React and TypeScript</a>
+                  </h2>
+                  
+                  <p class="text-gray-500 dark:text-gray-400 mb-4">Learn how to set up a new project with React and TypeScript and explore the benefits of using TypeScript with React.</p>
+                  
+                  <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors inline-flex items-center">
+                    Read More 
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Blog Post 2 -->
+            <div class="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden">
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="md:col-span-1 bg-gray-200 dark:bg-gray-800 aspect-video md:aspect-auto flex items-center justify-center">
+                  <span class="text-gray-500 dark:text-gray-400">Blog Image</span>
+                </div>
+                <div class="p-6 md:col-span-2">
+                  <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mr-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <time datetime="2023-03-22">March 22, 2023</time>
+                    <span class="mx-2">•</span>
+                    <span>8 min read</span>
+                  </div>
+                  
+                  <h2 class="text-2xl font-semibold mb-3">
+                    <a href="#" class="hover:underline">Mastering Tailwind CSS</a>
+                  </h2>
+                  
+                  <p class="text-gray-500 dark:text-gray-400 mb-4">Discover advanced techniques and best practices for building beautiful UIs with Tailwind CSS.</p>
+                  
+                  <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors inline-flex items-center">
+                    Read More 
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Blog Post 3 -->
+            <div class="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden">
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="md:col-span-1 bg-gray-200 dark:bg-gray-800 aspect-video md:aspect-auto flex items-center justify-center">
+                  <span class="text-gray-500 dark:text-gray-400">Blog Image</span>
+                </div>
+                <div class="p-6 md:col-span-2">
+                  <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mr-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <time datetime="2023-02-10">February 10, 2023</time>
+                    <span class="mx-2">•</span>
+                    <span>6 min read</span>
+                  </div>
+                  
+                  <h2 class="text-2xl font-semibold mb-3">
+                    <a href="#" class="hover:underline">Web Performance Optimization</a>
+                  </h2>
+                  
+                  <p class="text-gray-500 dark:text-gray-400 mb-4">Explore strategies to improve your website's loading speed and overall performance.</p>
+                  
+                  <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors inline-flex items-center">
+                    Read More 
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Blog Post 4 -->
+            <div class="border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden">
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="md:col-span-1 bg-gray-200 dark:bg-gray-800 aspect-video md:aspect-auto flex items-center justify-center">
+                  <span class="text-gray-500 dark:text-gray-400">Blog Image</span>
+                </div>
+                <div class="p-6 md:col-span-2">
+                  <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mr-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <time datetime="2023-01-05">January 5, 2023</time>
+                    <span class="mx-2">•</span>
+                    <span>7 min read</span>
+                  </div>
+                  
+                  <h2 class="text-2xl font-semibold mb-3">
+                    <a href="#" class="hover:underline">Building Accessible Web Applications</a>
+                  </h2>
+                  
+                  <p class="text-gray-500 dark:text-gray-400 mb-4">Learn the principles of web accessibility and how to implement them in your projects.</p>
+                  
+                  <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors inline-flex items-center">
+                    Read More 
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Contact Page -->
+
+      
+
+      <section id="contact" class="page min-h-screen pt-32 pb-16 hidden">
+        <div class="container mx-auto px-6">
+          <div class="mb-12">
+            <h1 class="text-4xl font-bold mb-4">Contact Me</h1>
+            <p class="text-xl text-gray-500 dark:text-gray-400">Get in touch for work inquiries or just to say hello.</p>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-12">
+            <div>
+              <h2 class="text-2xl font-semibold mb-4">Let's Talk</h2>
+              <p class="text-gray-500 dark:text-gray-400 mb-8">
+                I'm always interested in hearing about new projects and opportunities. Fill out the form and I'll get back to you as soon as possible.
+              </p>
+              
+              <div class="space-y-4">
+                <div class="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  <a href="mailto:your-email@example.com" class="hover:text-primary transition-colors">
+                    mdtaqitahmid799@gmail.com
+                  </a>
+                </div>
+                <div class="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                  <span>Available for freelance work</span>
+                </div>
+              </div>
+            </div>
+            <script>
+              // Initialize EmailJS with your public key
+              (function() {
+                  emailjs.init('vghwAWZVJL3zHtSxz'); // Replace with your EmailJS public key
+              })();
+          </script>
+            <div class="text-center">
+              <a href="https://wa.me/+8801750218732" class="inline-flex items-center justify-center bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-6.293-7.424c-.05.149-.091.306-.091.466 0 .446.347.809.781.809.434 0 .788-.363.788-.809 0-.16-.033-.317-.091-.466-.058-.133-.173-.243-.314-.314a.78.78 0 00-.383-.091.805.805 0 00-.79.809c0 .16.033.317.091.466"/>
+                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20m0 18a8 8 0 110-16 8 8 0 010 16"/>
+                </svg>
+                Chat on WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    
+    
+    
+   
+    <!-- Footer -->
+    <footer class="border-t mt-auto bg-white dark:bg-gray-900">
+      <div class="container mx-auto px-6 py-8">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div class="text-center md:text-left ">
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+              &copy; <span id="currentYear"></span> Md Taqi Tahmid. All rights reserved.
+            </p>
+          </div>
+          <div class="flex items-center gap-4">
+            <a
+              href="https://github.com/MdTaqiTahmid"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+              aria-label="GitHub"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </a>
+            <a
+              href="https://www.facebook.com/md.taqi.tahmid.2025"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+              aria-label="facebook"
+            >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
+            </svg>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/md-taqi-tahmid-82a385336/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+              aria-label="LinkedIn"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"/>
+              </svg>
+            </a>
+            <a
+              href="mailto:mdtaqitahmid799@gmail.com"
+              class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+              aria-label="Email"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mt-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    
+
+    <!-- JavaScript -->
+    <script>
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        // Particles
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 1500;
+        
+        const posArray = new Float32Array(particlesCount * 3);
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 10;
+        }
+        
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.02,
+            color: 0x9b87f5,
+            transparent: true,
+            opacity: 0.8
+        });
+        
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+        
+        camera.position.z = 3;
+        
+        // Mouse movement effect
+        document.addEventListener('mousemove', animateParticles);
+        
+        let mouseX = 0;
+        let mouseY = 0;
+        
+        function animateParticles(event) {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+        }
+        
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            particlesMesh.rotation.x = mouseY * 0.0002;
+            particlesMesh.rotation.y = mouseX * 0.0002;
+            
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+    <script>
+      // Theme toggle functionality
+      function setupThemeToggle() {
+        const themeToggle = document.getElementById('themeToggle');
+        const themeToggleMobile = document.getElementById('themeToggleMobile');
+        
+        const toggleTheme = () => {
+          if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+          } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+          }
+        };
+        
+        themeToggle.addEventListener('click', toggleTheme);
+        themeToggleMobile.addEventListener('click', toggleTheme);
+        
+        // Check for saved theme preference or prefer-color-scheme
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      }
+      
+      // Mobile menu functionality
+      function setupMobileMenu() {
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+        const closeIcon = document.getElementById('closeIcon');
+        
+        mobileMenuToggle.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+          menuIcon.classList.toggle('hidden');
+          closeIcon.classList.toggle('hidden');
+        });
+      }
+      
+      // Handle navigation
+      function setupNavigation() {
+        const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+        const pages = document.querySelectorAll('.page');
+        
+        navLinks.forEach(link => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            const targetId = link.getAttribute('data-target');
+            
+            // Update navigation links
+            navLinks.forEach(nl => {
+              nl.classList.remove('text-primary');
+              nl.classList.add('text-gray-500', 'dark:text-gray-400');
+            });
+            
+            document.querySelectorAll(`[data-target="${targetId}"]`).forEach(activeLink => {
+              activeLink.classList.remove('text-gray-500', 'dark:text-gray-400');
+              activeLink.classList.add('text-primary');
+            });
+            
+            // Show target page with animation
+            pages.forEach(page => {
+              if (page.id === targetId) {
+                page.classList.remove('hidden');
+                setTimeout(() => {
+                  page.classList.add('active');
+                }, 10);
+              } else {
+                page.classList.remove('active');
+                setTimeout(() => {
+                  page.classList.add('hidden');
+                }, 300); // Match transition duration
+              }
+            });
+            
+            // Close mobile menu
+            document.getElementById('mobileMenu').classList.add('hidden');
+            document.getElementById('menuIcon').classList.remove('hidden');
+            document.getElementById('closeIcon').classList.add('hidden');
+            
+            // Update URL hash
+            window.location.hash = targetId;
+          });
+        });
+        
+        // Handle initial page load or hash change
+        function handleHashChange() {
+          let hash = window.location.hash.substring(1) || 'home';
+          
+          // Update navigation links
+          navLinks.forEach(nl => {
+            nl.classList.remove('text-primary');
+            nl.classList.add('text-gray-500', 'dark:text-gray-400');
+          });
+          
+          document.querySelectorAll(`[data-target="${hash}"]`).forEach(activeLink => {
+            activeLink.classList.remove('text-gray-500', 'dark:text-gray-400');
+            activeLink.classList.add('text-primary');
+          });
+          
+          // Show target page
+          pages.forEach(page => {
+            if (page.id === hash) {
+              page.classList.remove('hidden');
+              setTimeout(() => {
+                page.classList.add('active');
+              }, 10);
+            } else {
+              page.classList.remove('active');
+              page.classList.add('hidden');
+            }
+          });
+        }
+        
+        window.addEventListener('hashchange', handleHashChange);
+        
+        // Handle initial page load
+        handleHashChange();
+      }
+      
+      // Navbar scroll effect
+      function setupNavbarScroll() {
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 10) {
+            navbar.classList.add('bg-white/80', 'dark:bg-gray-900/80', 'backdrop-blur-md', 'border-b');
+          } else {
+            navbar.classList.remove('bg-white/80', 'dark:bg-gray-900/80', 'backdrop-blur-md', 'border-b');
+          }
+        });
+      }
+      
+      // Contact form functionality
+      function setupContactForm() {
+        const contactForm = document.getElementById('contactForm');
+        const toast = document.getElementById('toast');
+        
+        contactForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          
+          // Simulate form submission
+          setTimeout(() => {
+            // Show toast
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Hide toast after 3 seconds
+            setTimeout(() => {
+              toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+          }, 1000);
+        });
+      }
+      
+      // Set current year in footer
+      function setCurrentYear() {
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+      }
+      
+      // Initialize everything when DOM is loaded
+      document.addEventListener('DOMContentLoaded', () => {
+        setupThemeToggle();
+        setupMobileMenu();
+        setupNavigation();
+        setupNavbarScroll();
+        setupContactForm();
+        setCurrentYear();
+      });
+    </script>
+
+
+    <script src="script.js"></script>
+  </body>
+</html>
